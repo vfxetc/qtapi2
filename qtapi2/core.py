@@ -1,6 +1,9 @@
 from .moduleproxy import ModuleProxy
 
-import Qt as _Qt
+import qtpy as _Qt
+import qtpy.QtCore
+import qtpy.QtGui
+import qtpy.QtWidgets
 
 
 _prefixes = ['Q', 'Qt', '']
@@ -13,7 +16,7 @@ _order = {
     'QtWidgets': -10
 }
 
-for name in sorted(_Qt.__all__, key=lambda name: _order.get(name, 0)):
+for name in sorted(dir(_Qt), key=lambda name: _order.get(name, 0)):
     module = getattr(_Qt, name)
     _modules.append(module)
     setattr(Q, name[2:], ModuleProxy(_prefixes, (module, )))
